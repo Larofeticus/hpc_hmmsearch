@@ -1,0 +1,12 @@
+How to use hpc_hmmsearch:
+ 
+Go to hmmer.org and get a copy of the source code for HMMER3.1b2.
+Unpack it, follow the build instructions.
+  On Cori, build process is to run autoconf and ./configure CC=cc
+  (on a cray system with their compiler wrappers, configure doesn't understand and might give you flags for the wrong compiler, CC=cc is the workaround for that)
+
+Copy hpc_hmmseach.c into the src/ directory.
+
+When you make, add V=1 to see the full command lines being run. Pick out the compile and link lines for hmmsearch.c
+cd to the src directory, take those lines, add the hpc_ prefix to the .c .o and output file names, and add the appropriate compiler flag to use openmp, -openmp or maybe -qopenmp
+OpenMP version 3.5 is the minimum. This won't work on your macbook because that builds with clang and only supports up to openmp 3.1
