@@ -10,3 +10,14 @@ Copy hpc_hmmseach.c into the src/ directory.
 When you make, add V=1 to see the full command lines being run. Pick out the compile and link lines for hmmsearch.c
 cd to the src directory, take those lines, add the hpc_ prefix to the .c .o and output file names, and add the appropriate compiler flag to use openmp, -openmp or maybe -qopenmp
 OpenMP version 3.5 is the minimum. This won't work on your macbook because that builds with clang and only supports up to openmp 3.1
+
+Command line behavior is exactly the same as hmmsearch except for this section of arguments:
+
+Input buffer and thread control:
+  --seq_buffer <n> : set # of sequences per thread buffer  [200000]  (n>=1)
+  --hmm_buffer <n> : set # of hmms per thread hmm buffer  [500]  (n>=1)
+  --cpu <n>        : set # of threads  [1]  (n>=1)
+ 
+The xxx_buffer arguments control the size of the input buffers; larger buffers use more memory and require fewer synchronizations. One full buffer must be read to prime the pipeline before computation begins, so very large buffers that hold the entire file are usually not optimal.
+
+The cpu argument is different from hmmsearch. This is the total number of the threads the entire application will use, while hmmsearch presumes n worker threads plus the additional master thread. Not needing to add +1 arithmatic all over job scheduling scripts is a nice removed inconvenience.
