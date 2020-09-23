@@ -12,7 +12,7 @@ RUN ./configure && make
 
 # build custommized top level application that implements hpc_hmmsearch
 WORKDIR /hmmer-3.1b2/src
-RUN gcc -std=gnu99 -O3 -fomit-frame-pointer -fstrict-aliasing -march=core2 -pthread -fPIC -msse2 -DHAVE_CONFIG_H  -I../easel -I../libdivsufsort -I../easel -I. -I. -o hpc_hmmsearch.o -c hpc_hmmsearch.c && gcc -std=gnu99 -O3 -fomit-frame-pointer -fstrict-aliasing -march=core2 -pthread -fPIC -msse2 -DHAVE_CONFIG_H  -L../easel -L./impl_sse -L../libdivsufsort -L. -o hpc_hmmsearch hpc_hmmsearch.o  -lhmmer -leasel -ldivsufsort     -lm
+RUN gcc -std=gnu99 -O3 -fomit-frame-pointer -fstrict-aliasing -march=core2 -fopenmp -fPIC -msse2 -DHAVE_CONFIG_H  -I../easel -I../libdivsufsort -I../easel -I. -I. -o hpc_hmmsearch.o -c hpc_hmmsearch.c && gcc -std=gnu99 -O3 -fomit-frame-pointer -fstrict-aliasing -march=core2 -fopenmp -fPIC -msse2 -DHAVE_CONFIG_H  -L../easel -L./impl_sse -L../libdivsufsort -L. -o hpc_hmmsearch hpc_hmmsearch.o  -lhmmer -leasel -ldivsufsort     -lm
 
 # check the right thing is there
 RUN ./hpc_hmmsearch -h
