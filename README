@@ -1,6 +1,6 @@
 How to use hpc_hmmsearch:
  
-Go to hmmer.org and get a copy of the source code for HMMER3.1b2.
+Go to hmmer.org and get a copy of the source code for HMMER3.3.2.
 Unpack it, follow the build instructions.
   On Cori, build process is to run autoconf and ./configure CC=cc
   (on a cray system with their compiler wrappers, configure doesn't understand and might give you flags for the wrong compiler, CC=cc is the workaround for that)
