@@ -723,8 +723,8 @@ static int output_hmm_buffer(HMM_BUFFER **hb, int buffer_size, int nquery, OUTPU
 
         if (p7_tophits_Alignment(hb[x]->th, abc, NULL, NULL, 0, p7_ALL_CONSENSUS_COLS, &msa) == eslOK)
         {
-          if (oi->textw > 0) eslx_msafile_Write(afp, msa, eslMSAFILE_STOCKHOLM);
-          else               eslx_msafile_Write(afp, msa, eslMSAFILE_PFAM);
+          if (oi->textw > 0) esl_msafile_Write(afp, msa, eslMSAFILE_STOCKHOLM);
+          else               esl_msafile_Write(afp, msa, eslMSAFILE_PFAM);
           if (fprintf(ofp, "# Alignment of %d hits satisfying inclusion thresholds saved to: %s\n", msa->nseq, esl_opt_GetString(go, "-A")) < 0)
             { fprintf(stderr, "output write failed\n"); exit(0); }
         }
@@ -783,7 +783,7 @@ static int thread_kernel(HMM_BUFFER *hb, ESL_SQ **sbb, int start, int end, ESL_G
         p7_pli_NewSeq(pli, sbb[x]);
         p7_bg_SetLength(bg, sbb[x]->n);
         p7_oprofile_ReconfigLength(om, sbb[x]->n);
-        p7_Pipeline(pli, om, bg, sbb[x], th);
+        p7_Pipeline(pli, om, bg, sbb[x], NULL, th);
         p7_pipeline_Reuse(pli);
       }
     }
